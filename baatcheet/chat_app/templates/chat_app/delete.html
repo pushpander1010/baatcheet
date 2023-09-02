@@ -1,0 +1,10 @@
+{% extends 'chat_app/base.html' %}
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <p>Do you want to delete {{rooms.name}}??</p>
+        <a href="{% url 'chat_app:home' %}">Go back</a>
+       <input type="submit" value="Confirm">
+
+    </form>
+    {% endblock %}

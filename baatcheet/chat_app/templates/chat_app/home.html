@@ -1,0 +1,33 @@
+{% extends 'chat_app/base.html' %}
+{% block content %}
+
+<style>
+    .parent{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+    }
+</style>
+
+<div class="parent">
+    <div class="child1">
+<h3><a href="{% url 'chat_app:home' %}">All</a></h3>
+<hr>
+{% for topic in topics %}
+<h3><a href="{% url 'chat_app:home' %}?search={{topic.name}}">{{topic.name}}</a></h3>
+<hr>
+{% endfor %}
+<br>
+<a href="{% url 'chat_app:createRoom' %}">Create Room</a>
+</div>
+<div class="child2">
+{% for room in rooms %}
+
+<h1><a href="{% url 'chat_app:room' room.id %}">{{room.name}}</a></h1>
+<a href="{% url 'chat_app:updateRoom' room.id %}">Edit Room</a>
+<a href="{% url 'chat_app:deleteRoom' room.id %}">Delete Room</a>
+<hr>
+{% endfor %}
+</div>
+</div>
+
+{% endblock %}
