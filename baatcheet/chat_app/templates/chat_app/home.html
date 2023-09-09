@@ -8,8 +8,17 @@
     }
 </style>
 
+{% if request.user.is_authenticated %}
+    <h5 style="text-align: end;"><a href="{% url 'chat_app:logoutUser' %}">Logout</a></h5>
+    {% else  %}
+    <h5 style="text-align: end;"><a href="{% url 'chat_app:login_register' %}">Login</a></h5>
+    {% endif %}
+
 <div class="parent">
     <div class="child1">
+        <form action="" method="get">
+            <input type="text" name="search" id="searchBox"><input type="submit" value="search">
+            </form>
 <h3><a href="{% url 'chat_app:home' %}">All</a></h3>
 <hr>
 {% for topic in topics %}
@@ -21,10 +30,12 @@
 </div>
 <div class="child2">
 {% for room in rooms %}
-
 <h1><a href="{% url 'chat_app:room' room.id %}">{{room.name}}</a></h1>
+{% if request.user == room.host %}
+
 <a href="{% url 'chat_app:updateRoom' room.id %}">Edit Room</a>
 <a href="{% url 'chat_app:deleteRoom' room.id %}">Delete Room</a>
+{% endif %}
 <hr>
 {% endfor %}
 </div>

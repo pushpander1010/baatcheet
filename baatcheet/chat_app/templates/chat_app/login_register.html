@@ -1,0 +1,24 @@
+{% extends 'chat_app/base.html' %}
+
+{% block content %}
+{% csrf_token %}
+{% for message in messages %}
+<h5 style="color: red;">{{message}}</h5>
+{% endfor %}
+{% if switch == 'login' %}
+<h5 style="text-align: end;"><a href="{% url 'chat_app:registerUser' %}">Register</a></h5>
+<form action="" method="post">
+    {% csrf_token %}
+<input type="text" name="username" id="" placeholder="username">
+<input type="password" name="password" id="" placeholder="password">
+<input type="submit" value="Login">
+</form>
+{% else %}
+<h5 style="text-align: end;"><a href="{% url 'chat_app:login_register' %}">Login</a></h5>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Register">
+    </form>
+    {% endif %}
+{% endblock %}

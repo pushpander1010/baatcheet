@@ -1,9 +1,54 @@
 {% extends 'chat_app/base.html' %}
 {% block content %}
-<h1>{{rooms.name}}</h1>
+<style>
+    .parent{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+<div class="parent">
+    <div class="child1">
+        <h1>{{rooms.name}}</h1>
 <h5>{{rooms.host}}</h5>
 <h5>Created : {{rooms.created}}</h5>
 <h5>Updated : {{rooms.updated}}</h5><h5>{{rooms.host}}</h5>
 <h5>{{rooms.discription}}</h5>
 <h4>{{rooms.topic}}</h4>
+
+
+<br>
+<br>
+<br>
+<hr>
+<h2>Conversations</h2>
+<hr>
+{% for message in roomMessages %}
+
+<hr>
+<small>@{{message.user}}  {{message.created|timesince}}</small>
+<h4>{{message.body}}</h4>
+{% if request.user == message.user %}
+<h6><a href="{% url 'chat_app:deleteMessage' message.id %}">Delete</a> <a href="{% url 'chat_app:editMessage' message.id %}">Edit</a></h6>
+{% endif %}
+<hr>
+
+{% endfor %}
+{% if request.user.is_authenticated %}
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="addComment" id="" placeholder="Add comments">
+    </form>
+</div>
+{%  endif %}
+    </div>
+    <div class="child2">
+        <hr>
+        <h3>Participants</h3>
+        {% for participant in participants %}
+        <h5>@{{participant}}</h5>
+        {% endfor %}
+        <hr>
+    </div>
+</div>
 {% endblock %}
